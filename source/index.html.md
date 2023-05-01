@@ -25,11 +25,10 @@ meta:
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the DataViz API! This extensive API powers applications, services and scripts developed by DataViz in order to provide technical support for the Regional Planning Program at MTC. 
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Data science projects are developed using Python, with APIs managed using FastAPI. Web applications are built using a javascript framework, with APIs managed using Node.js. Descriptions and examples are provided with all API definitions in this documentation. If you have any questions or require any further information, please contact us: dataviz@bayareametro.gov.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
@@ -71,9 +70,14 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# Socrata
 
-## Get All Kittens
+## Get Parcel Geography
+
+This endpoint retrieves the geography for a single parcel.
+Data is returned as geojson.
+
+
 
 ```ruby
 require 'kittn'
@@ -106,34 +110,111 @@ let kittens = api.kittens.get();
 ```json
 [
   {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+    "parcel_id": "-122p23426X37p76707X",
+    "geo_id": "-122.23426:+37.76707:",
+    "county": "Alameda",
+    "jurisdiction": "Alameda",
+    "geometry": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -122.2338080648335,
+              37.76740264551864
+            ],
+            [
+              -122.2338366420393,
+              37.76736779416968
+            ],
+            [
+              -122.2339260630376,
+              37.76725873500524
+            ],
+            [
+              -122.2340079489674,
+              37.76715886681279
+            ],
+            [
+              -122.234013757474,
+              37.76715203826209
+            ],
+            [
+              -122.2340857628339,
+              37.76706396864847
+            ],
+            [
+              -122.2340905068369,
+              37.76705817971169
+            ],
+            [
+              -122.2340914258134,
+              37.76705705913479
+            ],
+            [
+              -122.2341665213779,
+              37.76696547215583
+            ],
+            [
+              -122.23417214034,
+              37.76695861518223
+            ],
+            [
+              -122.2343720819661,
+              37.76671476755052
+            ],
+            [
+              -122.2347407281008,
+              37.76690523998366
+            ],
+            [
+              -122.2346256898455,
+              37.76704370239677
+            ],
+            [
+              -122.2346201364604,
+              37.76705039532361
+            ],
+            [
+              -122.2343926461996,
+              37.76732420475108
+            ],
+            [
+              -122.233882909768,
+              37.76742936241326
+            ],
+            [
+              -122.2338646308486,
+              37.76743313244657
+            ],
+            [
+              -122.2338080648335,
+              37.76740264551864
+            ],
+            [
+              -122.2338080648335,
+              37.76740264551864
+            ]
+          ]
+        ]
+      ]
+    },
+    "x_26910": "567439.146317296",
+    "y_26910": "4180250.1057599145"
   }
 ]
 ```
-
-This endpoint retrieves all kittens.
-
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET https://api.mtcanalytics.org/api/socrata/parcel/geo/<parcel_id>`
 
-### Query Parameters
+### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+Parameter | Description
+--------- | -----------
+geo | The geography for the dashboard [regional, county, jurisdiction]
+name | For county or jurisdiction, the name of the county or jurisdiction
+
 
 <aside class="success">
 Remember — a happy kitten is an authenticated kitten!
@@ -170,13 +251,101 @@ let max = api.kittens.get(2);
 > The above command returns JSON structured like this:
 
 ```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+[
+  {
+    "parcel_id": "-122p23426X37p76707X",
+    "geo_id": "-122.23426:+37.76707:",
+    "county": "Alameda",
+    "jurisdiction": "Alameda",
+    "geometry": {
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          [
+            [
+              -122.2338080648335,
+              37.76740264551864
+            ],
+            [
+              -122.2338366420393,
+              37.76736779416968
+            ],
+            [
+              -122.2339260630376,
+              37.76725873500524
+            ],
+            [
+              -122.2340079489674,
+              37.76715886681279
+            ],
+            [
+              -122.234013757474,
+              37.76715203826209
+            ],
+            [
+              -122.2340857628339,
+              37.76706396864847
+            ],
+            [
+              -122.2340905068369,
+              37.76705817971169
+            ],
+            [
+              -122.2340914258134,
+              37.76705705913479
+            ],
+            [
+              -122.2341665213779,
+              37.76696547215583
+            ],
+            [
+              -122.23417214034,
+              37.76695861518223
+            ],
+            [
+              -122.2343720819661,
+              37.76671476755052
+            ],
+            [
+              -122.2347407281008,
+              37.76690523998366
+            ],
+            [
+              -122.2346256898455,
+              37.76704370239677
+            ],
+            [
+              -122.2346201364604,
+              37.76705039532361
+            ],
+            [
+              -122.2343926461996,
+              37.76732420475108
+            ],
+            [
+              -122.233882909768,
+              37.76742936241326
+            ],
+            [
+              -122.2338646308486,
+              37.76743313244657
+            ],
+            [
+              -122.2338080648335,
+              37.76740264551864
+            ],
+            [
+              -122.2338080648335,
+              37.76740264551864
+            ]
+          ]
+        ]
+      ]
+    },
+    "x_26910": "567439.146317296",
+    "y_26910": "4180250.1057599145"
+  }
+]
 ```
 
 This endpoint retrieves a specific kitten.
@@ -242,4 +411,24 @@ This endpoint deletes a specific kitten.
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to delete
+
+
+# Mode
+
+## Get a Specific Dashboard URL
+
+This endpoint retrieves a specific dashboard URL for a white label embed.
+
+### HTTP Request
+
+`GET https://api.mtcanalytics.org/api/mode/dashboard/<geo>/<name>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+geo | The geography for the dashboard [regional, county, jurisdiction]
+name | For county or jurisdiction, the name of the county or jurisdiction
+
+# HLUV
 
