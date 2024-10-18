@@ -30,7 +30,7 @@ Welcome to the DataViz API! This extensive API powers applications, services and
 Data science projects are developed using Python, with APIs managed using FastAPI. Web applications are built using a javascript framework, with APIs managed using Node.js. Descriptions and examples are provided with all API definitions in this documentation. If you have any questions or require any further information, please contact us: dataviz@bayareametro.gov.
 
 
-# Authentication
+# Authentication/User Management
 
 > To authorize, use this code:
 
@@ -60,14 +60,52 @@ let api = kittn.authorize('meowmeowmeow');
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Authentication for DataViz apps is handled in two ways:
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+  - [Firebase](https://firebase.google.com/) by Google for non-MTC users
+  - Single Sign On via [OneLogin](https://www.onelogin.com/) for MTC Users
 
-`Authorization: meowmeowmeow`
+Once a user is authenticated via one of these two methods, a json web token is generated to create and maintain a session with the application
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+The user table for all applications is managed as a protected table in Socrata. The user table does not store or manage any user passwords.
+</aside>
+
+## Me
+
+This endpoint retrieves information for the current logged in user. 
+
+Data is returned as json.
+
+Headers: `Authorization: Bearer samplemtcjsonwebtoken`
+
+```javascript
+
+http.get('https://jsapi.mtcanalytics.org/users/me', userData)
+.then(token => {
+  if token console.log(token)
+})
+.catch(err => {
+  if err console.log(err);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    token: sampletokenresponse
+  }
+]
+```
+### HTTP Request
+
+`GET https://api.mtcanalytics.org/users/me`
+
+
+<aside class="success">
+Once a user is authenticated, all requests to protected API endpoints should include an Authorization header
 </aside>
 
 # Socrata
